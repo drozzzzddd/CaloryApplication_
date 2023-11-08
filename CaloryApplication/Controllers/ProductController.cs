@@ -20,13 +20,13 @@ namespace CaloryApplication.Controllers
 
         [HttpGet("/get")]
 
-        public ActionResult<List<Product>> Get()
+        public ActionResult<List<Product>> Get() //getall
         {
             var products = _productRepository.GetAllProducts();
             return Ok(products);
         }
 
-        [HttpGet("/post")]
+        [HttpPost("/post")] //
 
         public ActionResult Post(ProductViewModel prod)
         {
