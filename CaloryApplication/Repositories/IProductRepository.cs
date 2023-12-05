@@ -5,8 +5,7 @@ namespace CaloryApplication.Repositories;
     {
         List<Product> GetAllProducts();
         Product? GetProductById(int id);
-    bool AddProduct(Product product);
+        bool AddProduct(Product product);
 
-    bool DeleteProduct(Product product);
-
+        bool DeleteProduct(Product product);
     }
