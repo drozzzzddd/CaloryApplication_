@@ -1,6 +1,7 @@
 ﻿using CaloryApplication.ProductDbContext;
 using CaloryApplication.Models;
-//using ProductContext.DbContext;
+
+
 namespace CaloryApplication.Repositories
 {
     public class ProductRepository : IProductRepository
@@ -26,7 +27,7 @@ namespace CaloryApplication.Repositories
 
         public Product? GetProductById(int id)
         {
-            return _productContext.Products.Where(e => e.Id == id).FirstOrDefault();
+            return _productContext.Products.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public bool DeleteProduct(Product product)

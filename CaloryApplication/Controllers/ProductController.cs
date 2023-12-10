@@ -13,49 +13,48 @@ namespace CaloryApplication.Controllers
     {
         private IProductRepository _productRepository;
 
-        public ProductController(IProductRepository repository)
+        public ProductController(IProductRepository productRepository)
         {
-            _productRepository = repository;
+            _productRepository = productRepository;
         }
 
-        [HttpGet("/get")]
-
-        public ActionResult<List<Product>> Get() //getall
+        [HttpGet("/get/product")]
+        public ActionResult<List<Product>> GetAllProducts() 
         {
             var products = _productRepository.GetAllProducts();
             return Ok(products);
         }
 
-        [HttpPost("/post")] //
-
+        [HttpPost("/post/product")] 
         public ActionResult Post(ProductViewModel prod)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             _productRepository.AddProduct(new Product()
             {
                 Name = prod.Name,
-                CaloryInGr = prod.CaloryInGr,
-                Portion = prod.Portion,
-                Squirrels = prod.Squirrels,
-                Carboh = prod.Carboh,
                 Fats = prod.Fats,
+                Squirrels = prod.Squirrels,
+                CaloriesPer100gr = prod.CaloriesPer100gr,
+                Carbohydrates = prod.Carbohydrates,
             });
+
             return Ok();
         }
 
-        [HttpGet("/get/{id}")]
+        [HttpGet("/get/product/{id}")]
         public ActionResult<Product> GetProductById(int id)
         {
             var product = _productRepository.GetProductById(id);
+
             if (product == null)
                 return NotFound();
 
             return Ok(product);
         }
 
-        [HttpDelete("/delete/{id}")]
-
+        [HttpDelete("/delete/product/{id}")]
         public ActionResult DeleteProductById(int id)
         {
             var product = _productRepository.GetProductById(id);
