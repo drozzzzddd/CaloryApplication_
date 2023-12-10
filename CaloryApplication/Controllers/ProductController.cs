@@ -19,7 +19,6 @@ namespace CaloryApplication.Controllers
         }
 
         [HttpGet("/get/product")]
-
         public ActionResult<List<Product>> GetAllProducts() 
         {
             var products = _productRepository.GetAllProducts();
@@ -27,10 +26,10 @@ namespace CaloryApplication.Controllers
         }
 
         [HttpPost("/post/product")] 
-
         public ActionResult Post(ProductViewModel prod)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             _productRepository.AddProduct(new Product()
             {
@@ -40,6 +39,7 @@ namespace CaloryApplication.Controllers
                 CaloriesPer100gr = prod.CaloriesPer100gr,
                 Carbohydrates = prod.Carbohydrates,
             });
+
             return Ok();
         }
 
@@ -47,6 +47,7 @@ namespace CaloryApplication.Controllers
         public ActionResult<Product> GetProductById(int id)
         {
             var product = _productRepository.GetProductById(id);
+
             if (product == null)
                 return NotFound();
 
@@ -54,7 +55,6 @@ namespace CaloryApplication.Controllers
         }
 
         [HttpDelete("/delete/product/{id}")]
-
         public ActionResult DeleteProductById(int id)
         {
             var product = _productRepository.GetProductById(id);

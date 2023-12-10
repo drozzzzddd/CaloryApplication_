@@ -11,5 +11,9 @@ namespace CaloryApplication.ProductDbContext
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Meal> Meals { get; set; }
+
+        public DbSet <TotalCalories> Calories_table { get; set; }
+
     }
 }

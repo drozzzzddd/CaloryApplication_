@@ -23,6 +23,7 @@ namespace CaloryApplication.Controllers
         public ActionResult<List<TotalCalories>> GetAllTotalCalories()
         {
             var totalCalories = _totalCaloriesRepository.GetAllTotalCalories();
+
             return Ok(totalCalories);
         }
 
@@ -31,6 +32,7 @@ namespace CaloryApplication.Controllers
         public ActionResult<TotalCalories> GetTotalCaloriesById(int id)
         {
             var totalCalories = _totalCaloriesRepository.GetTotalCaloriesById(id);
+
             if (totalCalories == null)
                 return NotFound();
 
@@ -41,17 +43,21 @@ namespace CaloryApplication.Controllers
 
         public ActionResult Post(TotalCaloriesViewModel totcal)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            _totalCaloriesRepository.AddTotalCalories(new TotalCalories()
+            if (ModelState.IsValid)
             {
-                Date = totcal.Date,
-                TotalConsumedCalories = totcal.TotalConsumedCalories,
-            });
-            return Ok();
+                var totalCalories = new TotalCalories
+                {
+                    Date = totcal.Date,
+                };
+
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
-        [HttpDelete("/delete/product/{id}")]
+        [HttpDelete("/delete/calories/{id}")]
 
         public ActionResult DeleteTotalCalories(int id)
         {

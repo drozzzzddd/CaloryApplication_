@@ -1,83 +1,45 @@
-﻿using CaloryApplication.MealDbContext;
+﻿using CaloryApplication.ProductDbContext;
 using CaloryApplication.Models;
 using CaloryApplication.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CaloryApplication.Repositories
 {
-    public class MealRepository : IMealRepository
-    {
-        private MealContext _mealContext;
+    public class MealRepository : IMealRepository {
 
-        public MealRepository(MealContext context)
-        {
-            _mealContext = context;
-        }
-        
-        public bool AddMeal(Meal meal)
-        {
-            _mealContext.Meals.Add(meal);
-            _mealContext.SaveChanges();
+        private ProductContext _context;
 
-            return true;
+        public MealRepository(ProductContext context)
+        {
+            _context = context;
         }
 
         public List<Meal> GetAllMeals()
         {
-            return _mealContext.Meals.ToList();
+            return _context.Meals.ToList();
         }
 
-        public Meal? GetMealById(int id)
+        public Meal GetMealById(int id)
         {
-            return _mealContext.Meals.Where (m => m.Id == id).FirstOrDefault();
+            return _context.Meals.FirstOrDefault(m => m.Id == id);
+        }
+
+        public bool AddMeal(Meal meal)
+        {
+            _context.Meals.Add(meal);
+            _context.SaveChanges();
+
+            return true;
         }
 
         public bool DeleteMeal(Meal meal)
         {
-            _mealContext.Remove(meal);
-            _mealContext.SaveChanges();
+            _context.Meals.Remove(meal);
+            _context.SaveChanges();
 
             return true;
         }
     }
-}
-
-
-
-
-
-/*private ProductContext _productContext;
-public ProductRepository(ProductContext context)
-{
-    _productContext = context;
-}
-
-public bool AddProduct(Product product)
-{
-    _productContext.Products.Add(product);
-    _productContext.SaveChanges();
-
-    return true;
-}
-
-public List<Product> GetAllProducts()
-{
-    return _productContext.Products.ToList();
-}
-
-public Product? GetProductById(int id)
-{
-    return _productContext.Products.Where(e => e.Id == id).FirstOrDefault();
-}
-
-public bool DeleteProduct(Product product)
-{
-    _productContext.Remove(product);
-    _productContext.SaveChanges();
-
-    return true;
-}
-    }
-/*
 
     

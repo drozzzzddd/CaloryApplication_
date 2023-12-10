@@ -41,20 +41,24 @@ namespace CaloryApplication.Controllers
 
         [HttpPost("/post/meal")]
 
-      public ActionResult Post(MealViewModel meall)
+      public ActionResult Post(Meal meall)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            _mealRepository.AddMeal(new Meal()
+            if (ModelState.IsValid)
             {
-                ProductId = meall.ProductId,
-                Quantity = meall.Quantity,
-                ConsumeCalories = meall.ConsumeCalories,
-                ConsumeSquirrels = meall.ConsumeSquirrels,
-                ConsumeFats = meall.ConsumeFats,
-                ConsumeCarbohydrates = meall.ConsumeCarbohydrates,
-            });
-            return Ok();
+                // Создание нового экземпляра Meal на основе данных из mealViewModel
+                var meal = new Meal
+                {
+                    DateTime = meall.DateTime,
+                    ProductId = meall.ProductId,
+                    Quantity = meall.Quantity
+                };
+
+                // Добавление meal в базу данных
+
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
 
